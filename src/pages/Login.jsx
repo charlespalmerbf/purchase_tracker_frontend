@@ -1,37 +1,34 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../context/AuthContext';
-import { login } from "../api/auth";
+import { login } from '../api/auth';
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const { setIsAuthenticated } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
     try {
       const token = await login(username, password);
-      localStorage.setItem("token", token);
+      localStorage.setItem('token', token);
       setIsAuthenticated(true);
-      navigate("/dashboard");
+      navigate('/dashboard');
     } catch (err) {
-      setError("Invalid credentials");
+      setError('Invalid credentials');
     }
   };
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gray-100 px-4">
-      <form
-        onSubmit={handleLogin}
-        className="bg-white p-6 rounded-2xl shadow-md w-full max-w-md"
-      >
+      <form onSubmit={handleLogin} className="bg-white p-6 rounded-2xl shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <input
