@@ -1,5 +1,8 @@
 import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+
+import { useAuth } from '../context/AuthContext';
 import { login } from "../api/auth";
 
 export default function Login() {
@@ -8,12 +11,15 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const { setIsAuthenticated } = useAuth();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
     try {
       const token = await login(username, password);
       localStorage.setItem("token", token);
+      setIsAuthenticated(true);
       navigate("/dashboard");
     } catch (err) {
       setError("Invalid credentials");
