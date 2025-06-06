@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { useNavigate, Link } from 'react-router-dom';
 
-import { useAuth } from '../context/AuthContext';
-import { login } from '../api/auth';
+import { useAuth } from 'context/AuthContext';
+import { login } from 'api/auth';
 
 export default function Login() {
   const [username, setUsername] = useState('');
