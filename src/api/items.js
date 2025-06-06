@@ -28,3 +28,22 @@ export async function createItem(token, data) {
 
     return await res.json();
 }
+
+export async function deleteItem(token, id) {
+  const res = await fetch(`${API_URL}/items/${id}/`, {
+    method: 'DELETE',
+    headers: { Authorization: `Token ${token}` },
+  });
+
+  if (!res.ok) throw new Error('Failed to delete item');
+}
+
+export async function updateItem(token, id, formData) {
+  const res = await fetch(`${API_URL}/items/${id}/`, {
+    method: 'PUT',
+    headers: { Authorization: `Token ${token}` },
+    body: formData,
+  });
+
+  if (!res.ok) throw new Error('Failed to update item');
+}
