@@ -48,87 +48,92 @@ function Dashboard() {
       setPrice('');
       setPurchaseDate('');
       setImage(null);
-      fetchItems(); // Refresh list
+      fetchItems();
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white p-6 rounded shadow w-full max-w-2xl">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Your Dashboard</h1>
-          <button
-            onClick={handleLogout}
-            className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Logout
-          </button>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-6 py-12">
+      <div className="w-full max-w-7xl bg-white rounded-xl shadow-lg p-8 flex flex-col md:flex-row gap-10">
+        {/* Form Column */}
+        <div className="md:w-1/3">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold text-gray-800">Your Dashboard</h1>
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
+            >
+              Logout
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <input
+              type="text"
+              placeholder="Item name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="border border-gray-300 rounded-md p-3"
+              required
+            />
+            <input
+              type="number"
+              placeholder="Price (£)"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="border border-gray-300 rounded-md p-3"
+              required
+            />
+            <input
+              type="date"
+              value={purchaseDate}
+              onChange={(e) => setPurchaseDate(e.target.value)}
+              className="border border-gray-300 rounded-md p-3"
+              required
+            />
+            <input
+              type="file"
+              onChange={(e) => setImage(e.target.files[0])}
+              className="border border-gray-300 rounded-md p-3"
+              accept="image/*"
+            />
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded"
+            >
+              Add Item
+            </button>
+          </form>
+
+          {error && <p className="text-red-600 mt-4 text-center">{error}</p>}
         </div>
 
-        <form onSubmit={handleSubmit} className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            placeholder="Item name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="border p-2 rounded"
-            required
-          />
-          <input
-            type="number"
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className="border p-2 rounded"
-            required
-          />
-          <input
-            type="date"
-            value={purchaseDate}
-            onChange={(e) => setPurchaseDate(e.target.value)}
-            className="border p-2 rounded"
-            required
-          />
-          <input
-            type="file"
-            onChange={(e) => setImage(e.target.files[0])}
-            className="border p-2 rounded"
-            accept="image/*"
-          />
-          <button
-            type="submit"
-            className="bg-blue-600 text-white py-2 px-4 rounded col-span-full hover:bg-blue-700"
-          >
-            Add Item
-          </button>
-        </form>
-
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Your Items</h2>
+        {/* Items Column */}
+        <div className="md:w-2/3">
+          <h2 className="text-xl font-semibold mb-6">Your Items</h2>
           {items.length === 0 ? (
-            <p>No items yet.</p>
+            <p className="text-gray-500">No items yet.</p>
           ) : (
-            <ul className="grid grid-cols-1 gap-4">
+            <ul className="flex flex-col gap-6">
               {items.map((item) => (
-                <li key={item.id} className="flex items-center justify-between border p-4 rounded">
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-16 h-16 object-cover rounded"
-                    />
-                    <div>
-                      <p className="font-semibold">{item.name}</p>
-                      <p className="text-sm text-gray-600">£{item.price}</p>
-                      <p className="text-sm text-gray-600">Purchased: {item.purchase_date}</p>
-                      <p className="text-sm text-gray-700">
-                        Cost per day: £{Number(item.cost_per_day).toFixed(2)}
-                      </p>
-                    </div>
+                <li
+                  key={item.id}
+                  className="flex gap-4 items-center bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-24 h-24 object-cover rounded"
+                  />
+                  <div>
+                    <p className="font-bold text-lg text-gray-800">{item.name}</p>
+                    <p className="text-gray-700">£{Number(item.price).toFixed(2)}</p>
+                    <p className="text-sm text-gray-500">Purchased: {item.purchase_date}</p>
+                    <p className="text-sm text-gray-600">
+                      Cost per day: £{Number(item.cost_per_day).toFixed(2)}
+                    </p>
                   </div>
                 </li>
               ))}
