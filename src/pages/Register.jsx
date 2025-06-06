@@ -1,6 +1,8 @@
 // src/pages/Register.jsx
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import { useNavigate, Link } from 'react-router-dom';
+
 import { register } from '../api/auth';
 
 export default function Register() {
@@ -61,6 +63,12 @@ export default function Register() {
         >
           Register
         </button>
+        <div className="mt-4 text-center">
+          <span className="text-sm text-gray-600">Already have an account? </span>
+          <Link to="/login" className="text-sm text-blue-600 hover:underline">
+            Back to login
+          </Link>
+        </div>
       </form>
     </div>
   );
