@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000/api';
+const API_URL = process.env.REACT_APP_API_PATH || 'http://localhost:8000/api';
 
 export async function login(username, password) {
   const res = await fetch(`${API_URL}/auth/token/login/`, {
