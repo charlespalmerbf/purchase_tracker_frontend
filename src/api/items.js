@@ -1,0 +1,30 @@
+const API_URL = 'http://localhost:8000/api';
+
+export async function getItems(token) {
+    const res = await fetch(`${API_URL}/items/`, {
+        headers: { Authorization: `Token ${token}` },
+    });
+
+    if (!res.ok) {
+        throw new Error('Failed to fetch items');
+    }
+
+    return await res.json();
+}
+
+export async function createItem(token, data) {
+    console.log(token)
+    const res = await fetch(`${API_URL}/items/`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Token ${token}`,
+        },
+        body: data,
+    });
+
+    if (!res.ok) {
+        throw new Error('Failed to create item');
+    }
+
+    return await res.json();
+}

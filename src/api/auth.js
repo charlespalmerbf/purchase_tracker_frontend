@@ -1,5 +1,3 @@
-// src/api/auth.js
-
 const API_URL = 'http://localhost:8000/api';
 
 export async function login(username, password) {
@@ -15,7 +13,7 @@ export async function login(username, password) {
   }
 
   const data = await res.json();
-  localStorage.setItem('token', data.auth_token);
+  return data.auth_token;
 }
 
 export async function register(username, password, rePassword) {
@@ -31,21 +29,4 @@ export async function register(username, password, rePassword) {
   }
 
   return await res.json();
-}
-
-export async function getItems() {
-  const token = localStorage.getItem('token');
-  const res = await fetch(`${API_URL}/items/`, {
-    headers: { Authorization: `Token ${token}` },
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch items');
-  }
-
-  return await res.json();
-}
-
-export function logout() {
-  localStorage.removeItem('token');
 }

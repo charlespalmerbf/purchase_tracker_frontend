@@ -11,15 +11,14 @@ export default function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const { setIsAuthenticated } = useAuth();
+  const { setToken } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      const token = await login(username, password);
-      localStorage.setItem('token', token);
-      setIsAuthenticated(true);
+      const res = await login(username, password);
+      setToken(res);
       navigate('/dashboard');
     } catch (err) {
       setError('Invalid credentials');
@@ -53,7 +52,7 @@ export default function Login() {
         >
           Log In
         </button>
-         <div className="mt-4 text-center">
+        <div className="mt-4 text-center">
           <span className="text-sm text-gray-600">Don't have an account? </span>
           <Link to="/register" className="text-sm text-blue-600 hover:underline">
             Register here
