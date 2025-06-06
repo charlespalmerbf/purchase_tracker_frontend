@@ -25,7 +25,7 @@ A simple and clean React frontend (built with Vite) for tracking personal purcha
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/purchase-tracker-frontend.git
+git clone https://github.com/charlespalmerbf/purchase-tracker-frontend.git
 cd purchase-tracker-frontend
 ```
 
